@@ -1,0 +1,27 @@
+# Core Framework
+fastapi
+uvicorn
+python-multipart
+
+# Document Processing
+PyPDF2
+python-docx
+pdfplumber
+chardet
+
+# Embeddings (Free)
+sentence-transformers
+
+# Vector Database
+chromadb
+
+# LLM (Free)
+transformers
+accelerate
+
+# Utilities
+python-dotenv
+pydantic
+aiofiles
+pandas
+pyodbc

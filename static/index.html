@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat with Your Files | AI Chat System</title>
+<link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <h2>📄 Chat with Your Files</h2>
+                <p class="subtitle">Smart system using free open-source models</p>
+            </div>
+
+            <div class="upload-section">
+                <h3>📁 Upload New File</h3>
+                <div class="upload-area" id="uploadArea">
+                    <input type="file" id="fileInput" accept=".pdf,.docx,.txt" style="display: none">
+                    <div class="upload-content">
+                        <span class="upload-icon">📤</span>
+                        <p>Drag and drop file here or click to select</p>
+                        <small>Supports: PDF, DOCX, TXT (up to 50 MB)</small>
+                    </div>
+                </div>
+
+                <div class="chunk-strategy">
+                    <label>🔧 Chunking Strategy:</label>
+                    <select id="chunkStrategy">
+                        <option value="semantic">Semantic (by meaning)</option>
+                        <option value="fixed">Fixed size</option>
+                        <option value="overlapping">Overlapping</option>
+                    </select>
+                </div>
+
+                <button id="uploadBtn" class="btn btn-primary">🚀 Upload & Process</button>
+                <div id="uploadStatus" class="upload-status"></div>
+            </div>
+
+            <div class="files-section">
+                <h3>📚 Uploaded Files</h3>
+                <div id="filesList" class="files-list">
+                    <p class="empty-message">No files uploaded yet</p>
+                </div>
+            </div>
+
+            <div class="stats-section">
+                <h3>📊 Statistics</h3>
+                <div id="stats" class="stats-content">
+                    <p>Loading...</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main chat area -->
+        <main class="chat-area">
+            <div class="chat-header">
+                <h3>💬 Chat with Documents</h3>
+                <div class="model-info">
+                    <span class="badge" id="modelBadge">Loading...</span>
+                </div>
+            </div>
+
+            <div class="chat-messages" id="chatMessages">
+                <div class="message bot">
+                    <div class="message-avatar">🤖</div>
+                    <div class="message-content">
+                        <p>Hello! I'm your smart assistant. Upload a file and I'll answer your questions based on its
+                            content.</p>
+                        <small>✨ System running on free open-source models</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chat-input-area">
+                <div class="input-container">
+                    <textarea id="messageInput" placeholder="Type your question here..." rows="1"></textarea>
+                    <button id="sendBtn" class="btn-send">📨 Send</button>
+                </div>
+                <div class="chat-options">
+                    <label>
+                        <input type="checkbox" id="fileFilter"> Search only in selected file
+                    </label>
+                    <select id="fileSelect" disabled>
+                        <option value="">All files</option>
+                    </select>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- SQL Bonus modal -->
+    <div id="sqlModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>🗄️ Extract Data from SQL Server (Bonus Task)</h3>
+            <div class="sql-form">
+                <label>SQL Query:</label>
+                <textarea id="sqlQuery" rows="4" placeholder="SELECT * FROM your_table"></textarea>
+                <button id="executeSqlBtn" class="btn btn-secondary">▶️ Execute Query</button>
+                <div id="sqlResult"></div>
+            </div>
+        </div>
+    </div>
+
+<script src="/static/script.js"></script>
+</body>
+
+</html>
