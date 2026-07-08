@@ -20,71 +20,57 @@
 - 📊 **Multi-tenant Ready**: Support for multiple users and files
 
 ## 🏗️ Architecture
-┌─────────────────────────────────────────────────────────────────────────────────────┐
-│                              USER INTERFACE LAYER                                    │
-│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐  ┌───────────────┐ │
-│  │   Web UI        │  │   REST API      │  │   WebSocket     │  │   CLI Tool    │ │
-│  │   (HTML/CSS)    │  │   (FastAPI)     │  │   (Real-time)   │  │   (Python)    │ │
-│  └────────┬────────┘  └────────┬────────┘  └────────┬────────┘  └───────┬───────┘ │
-└───────────┼────────────────────┼────────────────────┼───────────────────┼─────────┘
-            │                    │                    │                   │
-            ▼                    ▼                    ▼                   ▼
-┌─────────────────────────────────────────────────────────────────────────────────────┐
-│                              API GATEWAY LAYER                                       │
-│  ┌─────────────────────────────────────────────────────────────────────────────┐   │
-│  │  • Authentication (JWT/OAuth2)    • Rate Limiting     • Request Validation │   │
-│  │  • Load Balancing                 • CORS              • Logging/Monitoring │   │
-│  │  • Circuit Breaker                • Retry Logic       • Request Tracing   │   │
-│  └─────────────────────────────────────────────────────────────────────────────┘   │
-└───────────────────────────────────┬─────────────────────────────────────────────────┘
-                                    │
-                                    ▼
-┌─────────────────────────────────────────────────────────────────────────────────────┐
-│                           APPLICATION SERVICES LAYER                                 │
-│                                                                                      │
-│  ┌─────────────────────┐  ┌─────────────────────┐  ┌─────────────────────────────┐ │
-│  │   FILE PROCESSING    │  │   CHUNKING ENGINE    │  │   EMBEDDING SERVICE        │ │
-│  │   ──────────────     │  │   ──────────────     │  │   ──────────────            │ │
-│  │  • PDF Extraction    │  │  • Fixed-size        │  │  • Sentence Transformers   │ │
-│  │  • DOCX Processing   │  │  • Overlapping       │  │  • OpenAI Embeddings       │ │
-│  │  • TXT Parsing       │  │  • Semantic/Smart    │  │  • Batch Processing        │ │
-│  │  • OCR (Optional)    │  │  • Paragraph-based   │  │  • Cache Management        │ │
-│  │  • Metadata Extract  │  │  • Sliding Window    │  │  • Dimension Reduction     │ │
-│  └──────────┬──────────┘  └──────────┬──────────┘  └──────────┬──────────────────┘ │
-│             │                        │                         │                    │
-│             ▼                        ▼                         ▼                    │
-│  ┌──────────────────────────────────────────────────────────────────────────────┐  │
-│  │                            DATA PROCESSING PIPELINE                          │  │
-│  │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌──────────────────┐   │  │
-│  │  │  Text       │  │  Preprocess │  │  Enrichment │  │  Validation      │   │  │
-│  │  │  Cleaning   │──▶│  (NLP)     │──▶│  (NER)     │──▶│  & Normalization │   │  │
-│  │  │  (Regex)    │  │  (Lemmat.)  │  │  (Keywords)│  │  (Quality Check) │   │  │
-│  │  └─────────────┘  └─────────────┘  └─────────────┘  └──────────────────┘   │  │
-│  └──────────────────────────────────────────────────────────────────────────────┘  │
-│                                                                                      │
-│  ┌─────────────────────┐  ┌─────────────────────┐  ┌─────────────────────────────┐ │
-│  │   VECTOR STORE      │  │   SEARCH ENGINE     │  │   LLM SERVICE               │ │
-│  │   ────────────      │  │   ────────────      │  │   ────────────               │ │
-│  │  • ChromaDB         │  │  • Similarity       │  │  • Hugging Face             │ │
-│  │  • Pinecone         │  │  • Hybrid Search    │  │  • Zephyr-7B/TinyLlama      │ │
-│  │  • Qdrant           │  │  • Filtering        │  │  • OpenAI GPT               │ │
-│  │  • MongoDB Atlas    │  │  • Ranking          │  │  • Anthropic Claude         │ │
-│  │  • FAISS (local)    │  │  • Reranking        │  │  • Custom Fine-tuned        │ │
-│  └──────────┬──────────┘  └──────────┬──────────┘  └──────────┬──────────────────┘ │
-│             │                        │                         │                    │
-└─────────────┼────────────────────────┼─────────────────────────┼────────────────────┘
-              │                        │                         │
-              ▼                        ▼                         ▼
-┌─────────────────────────────────────────────────────────────────────────────────────┐
-│                           DATA STORAGE LAYER                                        │
-│                                                                                      │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌──────────┐ │
-│  │   File      │  │  Vector     │  │  Metadata   │  │   Cache     │  │  Audit   │ │
-│  │   Storage   │  │  Database   │  │  Store      │  │   (Redis)   │  │  Logs    │ │
-│  │   (S3/MinIO)│  │  (ChromaDB) │  │  (SQL/NoSQL)│  │             │  │          │ │
-│  └─────────────┘  └─────────────┘  └─────────────┘  └─────────────┘  └──────────┘ │
-└─────────────────────────────────────────────────────────────────────────────────────┘
+# Architecture
 
+```mermaid
+flowchart TD
+    subgraph UI["User Interface Layer"]
+        WEB["Web UI (HTML/CSS)"]
+        API["REST API (FastAPI)"]
+        WS["WebSocket (Real-time)"]
+        CLI["CLI Tool (Python)"]
+    end
+
+    GW["API Gateway
+    • JWT/OAuth2
+    • Rate Limiting
+    • Validation & CORS
+    • Logging & Tracing"]
+
+    WEB --> GW
+    API --> GW
+    WS --> GW
+    CLI --> GW
+
+    subgraph APP["Application Services"]
+        FP["File Processing"]
+        CH["Chunking Engine"]
+        EMB["Embedding Service"]
+        PIPE["Text Processing Pipeline"]
+        VS["Vector Store Service"]
+        SRCH["Search & Reranking"]
+        LLM["LLM Service"]
+    end
+
+    GW --> FP
+    FP --> CH --> PIPE --> EMB
+    EMB --> VS
+    VS --> SRCH
+    SRCH --> LLM
+
+    subgraph DATA["Data Storage"]
+        OBJ["Object Storage (S3/MinIO)"]
+        VDB["Vector DB (Qdrant/ChromaDB/FAISS)"]
+        META["Metadata DB (SQL/NoSQL)"]
+        REDIS["Redis Cache"]
+        LOGS["Audit Logs"]
+    end
+
+    FP --> OBJ
+    VS --> VDB
+    PIPE --> META
+    EMB --> REDIS
+    GW --> LOGS
 
 ## 🚀 Quick Start
 
