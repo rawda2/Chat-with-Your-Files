@@ -25,17 +25,13 @@
 ```mermaid
 flowchart TD
     subgraph UI["User Interface Layer"]
-        WEB["Web UI (HTML/CSS)"]
-        API["REST API (FastAPI)"]
-        WS["WebSocket (Real-time)"]
-        CLI["CLI Tool (Python)"]
+        WEB["Web UI<br/>(HTML/CSS)"]
+        API["REST API<br/>(FastAPI)"]
+        WS["WebSocket<br/>(Real-time)"]
+        CLI["CLI Tool<br/>(Python)"]
     end
 
-    GW["API Gateway
-    • JWT/OAuth2
-    • Rate Limiting
-    • Validation & CORS
-    • Logging & Tracing"]
+    GW["API Gateway<br/>JWT/OAuth2<br/>Rate Limiting<br/>Validation &amp; CORS<br/>Logging &amp; Tracing"]
 
     WEB --> GW
     API --> GW
@@ -48,7 +44,7 @@ flowchart TD
         EMB["Embedding Service"]
         PIPE["Text Processing Pipeline"]
         VS["Vector Store Service"]
-        SRCH["Search & Reranking"]
+        SRCH["Search &amp; Reranking"]
         LLM["LLM Service"]
     end
 
@@ -59,9 +55,9 @@ flowchart TD
     SRCH --> LLM
 
     subgraph DATA["Data Storage"]
-        OBJ["Object Storage (S3/MinIO)"]
-        VDB["Vector DB (Qdrant/ChromaDB/FAISS)"]
-        META["Metadata DB (SQL/NoSQL)"]
+        OBJ["Object Storage<br/>(S3/MinIO)"]
+        VDB["Vector DB<br/>(Qdrant/ChromaDB/FAISS)"]
+        META["Metadata DB<br/>(SQL/NoSQL)"]
         REDIS["Redis Cache"]
         LOGS["Audit Logs"]
     end
@@ -71,6 +67,7 @@ flowchart TD
     PIPE --> META
     EMB --> REDIS
     GW --> LOGS
+```
 
 ## 🚀 Quick Start
 
